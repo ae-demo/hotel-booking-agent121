@@ -1,5 +1,6 @@
 title Hotel Booking Agent
 
+component hotel-booking-webapp as "Hotel Booking Webapp" web-application
 component hotel-booking-agent as "Hotel Booking Agent" ai-agent
 component hotel-booking-api as "Hotel Booking API" service
 component hotel-booking-db as "Hotel Booking DB" database
@@ -8,7 +9,11 @@ component agent-memory-db as "Agent Memory DB" database
 east user-auth as "Thunder Auth" identity-server
 south internal-payments-api as "Internal Payments API" service
 
+north -> hotel-booking-webapp
 north -> hotel-booking-agent
+
+hotel-booking-webapp -> hotel-booking-agent
+hotel-booking-webapp -> user-auth
 
 hotel-booking-agent -> hotel-booking-api
 hotel-booking-agent -> user-auth

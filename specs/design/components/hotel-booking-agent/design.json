@@ -12,7 +12,7 @@
     { "kind": "platform-resource", "name": "user-auth", "resourceType": "thunder-app" },
     { "kind": "platform-resource", "name": "agent-memory-db", "resourceType": "postgres-cnpg" }
   ],
-  "description": "The traveler's whole front door: a conversational agent that takes destination/dates/preferences, searches and compares hotels and rooms via hotel-booking-api, and books, pays for, lists and cancels the traveler's own reservations. Holds no business data itself beyond its own conversation store.",
+  "description": "The traveler's whole front door: a conversational agent that takes destination/dates/preferences, searches and compares hotels and rooms via hotel-booking-api, and books, pays for, lists and cancels the traveler's own reservations. Holds no business data itself beyond its own conversation store. Reached both by hotel-booking-webapp and directly by the console's Test tab.",
   "stories": [1, 2, 3, 4, 5, 6, 7],
-  "skillsPinned": ["agent-building"]
+  "skillsPinned": ["agent-building", "thunder-authentication"]
 }

@@ -1,0 +1,17 @@
+{
+  "name": "hotel-booking-webapp",
+  "type": "web-application",
+  "version": "0.1.0",
+  "language": "TypeScript",
+  "buildpack": "docker",
+  "appPath": "hotel-booking-webapp",
+  "entrypoint": "deployment/web-application",
+  "exposure": "internet",
+  "dependencies": [
+    { "kind": "component", "name": "hotel-booking-agent", "description": "Sends the traveler's chat messages to the booking agent and renders its replies." },
+    { "kind": "platform-resource", "name": "user-auth", "resourceType": "thunder-app" }
+  ],
+  "description": "The traveler's browser front end: a single sign-in-gated chat surface that lets a traveler talk to hotel-booking-agent to search, book, pay for, view and cancel their own hotel stays. Holds no business data and calls no service directly other than the agent — the agent is the entire application logic.",
+  "stories": [1, 2, 3, 4, 5, 6, 7],
+  "skillsPinned": ["wireframes", "react-webapp", "oxygen-ui-design-system", "thunder-authentication"]
+}
