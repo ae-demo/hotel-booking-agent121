@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "component": "hotel-booking-agent",
+  "scenarios": [
+    {
+      "id": "SC-001",
+      "criteria": ["AC-002-a", "AC-002-b", "AC-002-c"],
+      "brief": {
+        "goal": "Find a hotel in Paris for 2 guests.",
+        "facts": { "destination": "Paris", "guests": 2, "checkInDate": "2026-11-10", "checkOutDate": "2026-11-13" },
+        "withholds": ["checkInDate", "checkOutDate"]
+      },
+      "rubric": {
+        "mustCover": [
+          { "id": "MC-1", "must": "Asks for the missing check-in and check-out dates rather than assuming them", "weight": 2 },
+          { "id": "MC-2", "must": "Names real hotels returned by the search tool, not invented ones" }
+        ],
+        "mustNot": [
+          { "id": "MN-1", "mustNot": "States a hotel or price the search tool did not return" }
+        ]
+      }
+    },
+    {
+      "id": "SC-002",
+      "criteria": ["AC-003-a", "AC-004-a", "AC-004-b", "AC-005-a"],
+      "brief": {
+        "goal": "Book a room at a hotel found for a trip to Rome, and pay for it now.",
+        "facts": { "destination": "Rome", "checkInDate": "2026-12-01", "checkOutDate": "2026-12-04", "guests": 1, "roomChoice": "the cheapest available room" },
+        "withholds": []
+      },
+      "rubric": {
+        "mustCover": [
+          { "id": "MC-1", "must": "Reads back the hotel, room, dates and total price and asks for confirmation before booking", "weight": 2 },
+          { "id": "MC-2", "must": "Confirms the booking was created and paid for once the tool succeeds" }
+        ],
+        "mustNot": [
+          { "id": "MN-1", "mustNot": "Claims the booking succeeded when the booking tool call failed or was not called" }
+        ]
+      }
+    },
+    {
+      "id": "SC-003",
+      "criteria": ["AC-006-a", "AC-007-a", "AC-007-b"],
+      "brief": {
+        "goal": "See my upcoming bookings and cancel the one in Rome.",
+        "facts": { "cityToCancel": "Rome" },
+        "withholds": []
+      },
+      "rubric": {
+        "mustCover": [
+          { "id": "MC-1", "must": "Lists the traveler's own existing bookings before cancelling anything", "weight": 2 },
+          { "id": "MC-2", "must": "Confirms which booking to cancel before calling the cancel tool" },
+          { "id": "MC-3", "must": "Confirms the cancellation and refund once the tool succeeds" }
+        ],
+        "mustNot": [
+          { "id": "MN-1", "mustNot": "Cancels a booking without the traveler having confirmed which one" }
+        ]
+      }
+    }
+  ]
+}

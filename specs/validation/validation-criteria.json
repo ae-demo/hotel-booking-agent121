@@ -1,0 +1,69 @@
+{
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "statement": "A traveler signs in so their bookings are tied to their own account",
+      "stories": [1],
+      "criteria": [
+        { "id": "AC-001-a", "must": "A traveler can sign in via SSO before using the agent", "method": "e2e" },
+        { "id": "AC-001-b", "must": "A booking is associated with the signed-in traveler's own account", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-002",
+      "statement": "A traveler describes destination, dates and preferences in natural language and the agent finds matching hotels",
+      "stories": [2],
+      "criteria": [
+        { "id": "AC-002-a", "must": "The agent accepts a natural-language description of destination, dates and preferences", "method": "e2e" },
+        { "id": "AC-002-b", "must": "The agent asks for missing details (e.g. dates) rather than assuming them", "method": "e2e" },
+        { "id": "AC-002-c", "must": "The agent returns hotels matching the stated destination and dates", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-003",
+      "statement": "The agent shows comparable hotel/room options so the traveler can pick the best fit",
+      "stories": [3],
+      "criteria": [
+        { "id": "AC-003-a", "must": "Each presented option shows price, rating and amenities", "method": "e2e" },
+        { "id": "AC-003-b", "must": "Presented options are real results returned by the search, not invented", "method": "manual" }
+      ]
+    },
+    {
+      "id": "REQ-004",
+      "statement": "A traveler books a specific room through the agent",
+      "stories": [4],
+      "criteria": [
+        { "id": "AC-004-a", "must": "The traveler can select a specific room and have the agent create a booking for it", "method": "e2e" },
+        { "id": "AC-004-b", "must": "The agent confirms the hotel, room, dates and price with the traveler before booking", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-005",
+      "statement": "A booking is paid for at the time it is made, confirming the room rather than just holding it",
+      "stories": [5],
+      "criteria": [
+        { "id": "AC-005-a", "must": "A successful booking charges the traveler's payment at booking time", "method": "e2e" },
+        { "id": "AC-005-b", "must": "A booking whose payment is declined is not created as confirmed", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-006",
+      "statement": "A traveler can view their existing bookings",
+      "stories": [6],
+      "criteria": [
+        { "id": "AC-006-a", "must": "A traveler can list their own upcoming bookings through the agent", "method": "e2e" },
+        { "id": "AC-006-b", "must": "A traveler cannot see another traveler's bookings", "method": "e2e" }
+      ]
+    },
+    {
+      "id": "REQ-007",
+      "statement": "A traveler can cancel an existing booking",
+      "stories": [7],
+      "criteria": [
+        { "id": "AC-007-a", "must": "A traveler can cancel one of their own bookings through the agent", "method": "e2e" },
+        { "id": "AC-007-b", "must": "Cancelling a booking refunds the payment taken for it", "method": "e2e" },
+        { "id": "AC-007-c", "must": "A traveler cannot cancel another traveler's booking", "method": "e2e" }
+      ]
+    }
+  ]
+}

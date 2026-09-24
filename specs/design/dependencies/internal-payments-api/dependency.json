@@ -1,0 +1,26 @@
+{
+  "name": "internal-payments-api",
+  "resource": {
+    "ref": "internal-payments-api",
+    "name": "internal-payments-api",
+    "description": "A payment processing service that handles charges, refunds, and payment status for any project needing to process payments.",
+    "provider": "Internal Payments API",
+    "config": [
+      {
+        "key": "PAYMENT_API_BASE_URL",
+        "description": "Base URL of the internal payments API (e.g. https://development-default.apps.94.72.97.95.sslip.io/internal-payments-api)."
+      }
+    ],
+    "contract": {
+      "type": "openapi",
+      "path": "openapi.yaml",
+      "origin": "registry"
+    },
+    "consumptionInstructions": "Call the service directly at its base URL — it requires no credential or authentication header, and is reachable over the public internet. Read the base URL from the PAYMENT_API_BASE_URL config key rather than hardcoding it, and follow the operations defined in its OpenAPI contract for charging, refunding, and checking payment status."
+  },
+  "provenance": {
+    "registry": "internal-payments-api/openapi.yaml",
+    "sha256": "d5c630c4c0eba7e9eaaa1d647943e39a77da889682ff446f4ee74fe6a4c53553",
+    "readOn": "2026-09-24T08:14:58Z"
+  }
+}

@@ -1,0 +1,357 @@
+openapi: 3.0.1
+info:
+  title: Payment Gateway
+  description: "Mock payment gateway. Collects payments from customers via web and\
+    \ mobile checkout, and pays merchant balances out to their bank accounts. No money\
+    \ moves."
+  version: 0.2.0
+servers:
+- url: "{server}:{port}/v1"
+  variables:
+    server:
+      default: http://localhost
+    port:
+      default: "8080"
+paths:
+  /payments:
+    get:
+      summary: List payments.
+      operationId: getPayments
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentPage"
+    post:
+      summary: Authorise a payment.
+      operationId: postPayments
+      requestBody:
+        description: Payment to authorise
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePaymentRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+        "400":
+          description: BadRequest
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: "#/components/schemas/ApiError"
+                - $ref: "#/components/schemas/ErrorPayload"
+  /payments/{paymentId}:
+    get:
+      summary: Look up a single payment.
+      operationId: getPaymentsPaymentid
+      parameters:
+      - name: paymentId
+        in: path
+        description: Identifier returned when the payment was created
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+        "404":
+          description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "400":
+          description: BadRequest
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorPayload"
+  /payouts:
+    get:
+      summary: List payouts.
+      operationId: getPayouts
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PayoutPage"
+    post:
+      summary: Pay a merchant's balance out to its bank account.
+      operationId: postPayouts
+      requestBody:
+        description: Payout to make
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePayoutRequest"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payout"
+        "400":
+          description: BadRequest
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: "#/components/schemas/ApiError"
+                - $ref: "#/components/schemas/ErrorPayload"
+  /payouts/{payoutId}:
+    get:
+      summary: Look up a single payout.
+      operationId: getPayoutsPayoutid
+      parameters:
+      - name: payoutId
+        in: path
+        description: Identifier returned when the payout was created
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payout"
+        "404":
+          description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "400":
+          description: BadRequest
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorPayload"
+components:
+  schemas:
+    ApiError:
+      required:
+      - code
+      - message
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      additionalProperties: false
+      description: Error payload returned for any non-2xx response.
+    BankAccount:
+      required:
+      - accountNumber
+      - bankCode
+      type: object
+      properties:
+        accountNumber:
+          type: string
+        bankCode:
+          type: string
+      additionalProperties: false
+      description: Bank account a payout is sent to.
+    Channel:
+      type: string
+      description: Channel the payment was initiated from.
+      enum:
+      - mobile
+      - web
+    CreatePaymentRequest:
+      required:
+      - amount
+      - channel
+      - currency
+      - merchantId
+      type: object
+      properties:
+        merchantId:
+          type: string
+        amount:
+          type: integer
+          format: int64
+        currency:
+          type: string
+        channel:
+          $ref: "#/components/schemas/Channel"
+        reference:
+          type: string
+      additionalProperties: false
+      description: Request to authorise a payment.
+    CreatePayoutRequest:
+      required:
+      - amount
+      - bankAccount
+      - currency
+      - merchantId
+      type: object
+      properties:
+        merchantId:
+          type: string
+        amount:
+          type: integer
+          format: int64
+        currency:
+          type: string
+        bankAccount:
+          $ref: "#/components/schemas/BankAccount"
+        reference:
+          type: string
+      additionalProperties: false
+      description: Request to pay a merchant's balance out to its bank account.
+    ErrorPayload:
+      required:
+      - message
+      - method
+      - path
+      - reason
+      - status
+      - timestamp
+      type: object
+      properties:
+        timestamp:
+          type: string
+        status:
+          type: integer
+          format: int64
+        reason:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+        method:
+          type: string
+    Payment:
+      required:
+      - amount
+      - channel
+      - createdAt
+      - currency
+      - merchantId
+      - paymentId
+      - status
+      type: object
+      properties:
+        paymentId:
+          type: string
+        merchantId:
+          type: string
+        amount:
+          type: integer
+          format: int64
+        currency:
+          type: string
+        channel:
+          $ref: "#/components/schemas/Channel"
+        status:
+          $ref: "#/components/schemas/PaymentStatus"
+        reference:
+          type: string
+        createdAt:
+          type: string
+        redirectUrl:
+          type: string
+        deepLink:
+          type: string
+      additionalProperties: false
+      description: An authorised payment.
+    PaymentPage:
+      required:
+      - items
+      - total
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Payment"
+        total:
+          type: integer
+          format: int64
+      additionalProperties: false
+      description: A page of payments.
+    PaymentStatus:
+      type: string
+      description: Outcome of a payment authorisation.
+      enum:
+      - pending
+      - declined
+      - authorized
+    Payout:
+      required:
+      - amount
+      - bankAccount
+      - createdAt
+      - currency
+      - merchantId
+      - payoutId
+      - status
+      type: object
+      properties:
+        payoutId:
+          type: string
+        merchantId:
+          type: string
+        amount:
+          type: integer
+          format: int64
+        currency:
+          type: string
+        bankAccount:
+          $ref: "#/components/schemas/BankAccount"
+        status:
+          $ref: "#/components/schemas/PayoutStatus"
+        reference:
+          type: string
+        createdAt:
+          type: string
+        failureReason:
+          type: string
+      additionalProperties: false
+      description: A payout to a merchant's bank account.
+    PayoutPage:
+      required:
+      - items
+      - total
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Payout"
+        total:
+          type: integer
+          format: int64
+      additionalProperties: false
+      description: A page of payouts.
+    PayoutStatus:
+      type: string
+      description: |-
+        Outcome of a payout to a merchant's bank account. A payout settles or fails;
+        it is never "authorized", so it carries its own states rather than reusing
+        PaymentStatus.
+      enum:
+      - pending
+      - failed
+      - paid

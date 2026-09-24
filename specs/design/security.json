@@ -1,0 +1,37 @@
+{
+  "version": 3,
+  "permissions": [
+    {
+      "resource": "hotels",
+      "component": "hotel-booking-api",
+      "description": "The searchable hotel/room catalog",
+      "actions": [
+        { "handle": "search", "description": "Search hotels and rooms by destination, dates and preferences" }
+      ]
+    },
+    {
+      "resource": "bookings",
+      "component": "hotel-booking-api",
+      "description": "A traveler's own hotel bookings",
+      "actions": [
+        { "handle": "create", "description": "Book and pay for a room" },
+        { "handle": "read", "description": "The caller's own bookings" },
+        { "handle": "cancel", "description": "Cancel one of the caller's own bookings" }
+      ]
+    }
+  ],
+  "groups": [],
+  "roles": [
+    {
+      "name": "Traveler",
+      "description": "Searches for hotels, books and pays for rooms, and manages their own bookings.",
+      "stories": [1, 2, 3, 4, 5, 6, 7],
+      "grants": ["hotels:search", "bookings:create", "bookings:read", "bookings:cancel"],
+      "enrolment": "self-service"
+    }
+  ],
+  "testUsers": [
+    { "username": "test-traveler", "roles": ["Traveler"] },
+    { "username": "test-traveler-2", "roles": ["Traveler"] }
+  ]
+}
