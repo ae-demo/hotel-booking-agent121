@@ -13,3 +13,8 @@ replay_pid*.log
 # hotel-booking-webapp (React SPA)
 /hotel-booking-webapp/node_modules/
 /hotel-booking-webapp/dist/
+
+# hotel-booking-api (Ballerina service)
+/hotel-booking-api/target/
+/hotel-booking-api/generated/
+/hotel-booking-api/Config.toml
