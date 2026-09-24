@@ -18,16 +18,14 @@ A conversational booking agent that a traveler talks to in natural language — 
 2. As a traveler, I want to describe my destination, travel dates and preferences to the agent in natural language, so that it can find hotels that match without me filling out a search form.
 3. As a traveler, I want the agent to show me comparable hotel/room options (price, rating, amenities, availability), so that I can pick the one that fits me best.
 4. As a traveler, I want to book a specific room through the agent, so that my stay is reserved.
-5. As a traveler, I want to pay for my booking at the time I reserve it, so that my room is confirmed rather than just held. *assumed*
-6. As a traveler, I want to receive a booking confirmation, so that I have proof of my reservation. *assumed*
-7. As a traveler, I want to view my existing bookings, so that I can see what I have coming up. *assumed*
-8. As a traveler, I want to cancel an existing booking, so that I'm not charged or held to a stay I no longer want. *assumed*
+5. As a traveler, I want to pay for my booking at the time I reserve it, so that my room is confirmed rather than just held.
+6. As a traveler, I want to view my existing bookings, so that I can see what I have coming up.
+7. As a traveler, I want to cancel an existing booking, so that I'm not charged or held to a stay I no longer want.
 
 ## Product Decisions
 
 - Sign-in: every traveler signs in via SSO through Thunder, the platform IDP.
-- Payment: bookings are charged through the organization's internal payments API at the time of reservation. *assumed*
-- Booking confirmations are sent by email through the organization's internal email service. *assumed*
+- Payment: bookings are charged through the organization's internal payments API at the time of reservation.
 - Hotel and room inventory (properties, rooms, rates, availability) is data the system itself holds — there is no hotel-staff or admin actor managing it through this product, and no external hotel-inventory provider is assumed; it is held as the system's own catalog.
 
 ## Out of Scope
@@ -35,7 +33,7 @@ A conversational booking agent that a traveler talks to in natural language — 
 - Any hotel-staff, property-manager or admin-facing management of listings, pricing or availability.
 - Multi-provider price comparison against external travel sites.
 - Group bookings, corporate/negotiated rates, and loyalty/rewards programs.
-- SMS notifications (only email confirmation is in scope for now).
+- Booking confirmation and reminder notifications by email or SMS — the agent's own reply is the confirmation for now.
 
 ## Open Questions
 
