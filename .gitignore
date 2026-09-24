@@ -1,0 +1,20 @@
+# crash artefacts — never wanted, in any component
+core
+!core/
+core.[0-9]*
+hs_err_pid*.log
+replay_pid*.log
+
+# hotel-booking-agent (Node/TypeScript ai-agent)
+/hotel-booking-agent/node_modules/
+/hotel-booking-agent/dist/
+/hotel-booking-agent/.env
+
+# hotel-booking-webapp (React SPA)
+/hotel-booking-webapp/node_modules/
+/hotel-booking-webapp/dist/
+
+# hotel-booking-api (Ballerina service)
+/hotel-booking-api/target/
+/hotel-booking-api/generated/
+/hotel-booking-api/Config.toml

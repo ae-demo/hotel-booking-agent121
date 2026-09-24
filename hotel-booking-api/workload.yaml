@@ -1,0 +1,33 @@
+apiVersion: openchoreo.dev/v1alpha1
+metadata:
+  name: hotel-booking-api
+
+endpoints:
+  - name: http
+    type: HTTP
+    port: 9090
+    basePath: /
+    visibility:
+      - project
+      - internal
+      - external
+
+dependencies:
+  resources:
+    - ref: hotel-booking-age-f9cbd77b
+      envBindings:
+        dbname: HOTEL_BOOKING_DB_DBNAME
+        host: HOTEL_BOOKING_DB_HOST
+        password: HOTEL_BOOKING_DB_PASSWORD
+        port: HOTEL_BOOKING_DB_PORT
+        user: HOTEL_BOOKING_DB_USER
+    - ref: hotel-booking-age-c1b490fe
+      envBindings:
+        client_id: USER_AUTH_CLIENT_ID
+        issuer: USER_AUTH_ISSUER
+        jwks_url: USER_AUTH_JWKS_URL
+        resource: USER_AUTH_RESOURCE
+        scopes: USER_AUTH_SCOPES
+    - ref: hotel-booking-age-57947bb0
+      envBindings:
+        PAYMENT_API_BASE_URL: PAYMENT_API_BASE_URL
