@@ -7,12 +7,68 @@
   "appPath": "hotel-booking-agent",
   "entrypoint": "deployment/ai-agent",
   "exposure": "internet",
-  "dependencies": [
-    { "kind": "component", "name": "hotel-booking-api", "description": "Search hotels/rooms and create, list and cancel the caller's bookings." },
-    { "kind": "platform-resource", "name": "user-auth", "resourceType": "thunder-app" },
-    { "kind": "platform-resource", "name": "agent-memory-db", "resourceType": "postgres-cnpg" }
+  "stories": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
   ],
   "description": "The traveler's whole front door: a conversational agent that takes destination/dates/preferences, searches and compares hotels and rooms via hotel-booking-api, and books, pays for, lists and cancels the traveler's own reservations. Holds no business data itself beyond its own conversation store. Reached both by hotel-booking-webapp and directly by the console's Test tab.",
-  "stories": [1, 2, 3, 4, 5, 6, 7],
-  "skillsPinned": ["agent-building", "thunder-authentication"]
+  "dependencies": [
+    {
+      "kind": "component",
+      "name": "hotel-booking-api",
+      "description": "Search hotels/rooms and create, list and cancel the caller's bookings.",
+      "wiring": {
+        "endpoint": {
+          "component": "hotel-booking-agent121-hotel-booking-api",
+          "name": "http",
+          "visibility": "project",
+          "envBindings": {
+            "address": "HOTEL_BOOKING_API_URL"
+          }
+        }
+      }
+    },
+    {
+      "kind": "platform-resource",
+      "name": "user-auth",
+      "resourceType": "thunder-app",
+      "wiring": {
+        "ref": "hotel-booking-age-c1b490fe",
+        "envBindings": {
+          "client_id": "USER_AUTH_CLIENT_ID",
+          "issuer": "USER_AUTH_ISSUER",
+          "jwks_url": "USER_AUTH_JWKS_URL",
+          "resource": "USER_AUTH_RESOURCE",
+          "scopes": "USER_AUTH_SCOPES"
+        }
+      }
+    },
+    {
+      "kind": "platform-resource",
+      "name": "agent-memory-db",
+      "resourceType": "postgres-cnpg",
+      "wiring": {
+        "ref": "hotel-booking-age-c15018a6",
+        "envBindings": {
+          "dbname": "AGENT_MEMORY_DB_DBNAME",
+          "host": "AGENT_MEMORY_DB_HOST",
+          "password": "AGENT_MEMORY_DB_PASSWORD",
+          "port": "AGENT_MEMORY_DB_PORT",
+          "user": "AGENT_MEMORY_DB_USER"
+        }
+      }
+    }
+  ],
+  "exposesAPI": {
+    "auth": "end-user-required"
+  },
+  "skillsPinned": [
+    "agent-building",
+    "thunder-authentication"
+  ]
 }
