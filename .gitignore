@@ -9,3 +9,7 @@ replay_pid*.log
 /hotel-booking-agent/node_modules/
 /hotel-booking-agent/dist/
 /hotel-booking-agent/.env
+
+# hotel-booking-webapp (React SPA)
+/hotel-booking-webapp/node_modules/
+/hotel-booking-webapp/dist/
